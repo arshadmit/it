@@ -1,0 +1,1145 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Arshad - Loading</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+ body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  height: 100%;
+}
+
+    html {
+      height: 100%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 122, 0, 0.2);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #ff7a00;
+      letter-spacing: -1px;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: #ff7a00;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #ff7a00;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .cta-nav {
+        background: #ffffff;
+  color: #ff7a00;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cta-nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: left 0.7s ease;
+  z-index: -1;
+}
+
+.cta-nav:hover {
+  background: #ff7a00;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+}
+
+.cta-nav:hover::before {
+  left: 100%;
+}
+
+.cta-nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff7a00 0%, #ff9a3c 100%);
+  z-index: -1;
+  transition: transform 0.5s ease;
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.cta-nav:hover {
+  color: #ffffff;
+}
+
+.cta-nav:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+    }
+
+    .cta-nav:hover {
+      background: linear-gradient(135deg, #ff8c1a 0%, #ffb347 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 122, 0, 0.3);
+    }
+
+    /* Mobile menu */
+    .menu-toggle {
+      display: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #ffffff;
+    }
+
+    /* Loading Screen */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #2d1b69 0%, #1a0f3d 50%, #000000 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-content {
+      text-align: center;
+      animation: fadeInUp 1s ease-out;
+    }
+
+   .loading-name {
+      font-size: 4rem;
+      font-weight: 800;
+      letter-spacing: -2px;
+      text-align: center;
+
+     
+      text-shadow: none;
+
+      /* Gradient text */
+      background: linear-gradient(135deg, #ff7a00 0%, #ff9a3c 50%, #ffb347 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+
+      /* Animated gradient */
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease-in-out infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Animated Spinner */
+    .loading-spinner {
+      width: 80px;
+      height: 80px;
+      border: 4px solid rgba(255, 122, 0, 0.2);
+      border-top: 4px solid #ff7a00;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 2rem;
+      box-shadow: 
+        0 0 20px rgba(255, 122, 0, 0.4),
+        inset 0 0 20px rgba(255, 122, 0, 0.1);
+    }
+
+    /* Progress Bar Alternative */
+ /* Progress Bar Container */
+.loading-progress-container {
+  width: 300px;
+  height: 8px;
+  background: rgba(255, 122, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 2rem auto 0;
+  box-shadow: 
+    0 0 15px rgba(255, 122, 0, 0.4),
+    inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Progress Bar */
+.loading-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff7a00, #ff9a3c, #ffb347);
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 20px rgba(255, 122, 0, 0.8);
+}
+
+.loading-text {
+  color: #ff9a3c;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  opacity: 0.8;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+    .loading-text {
+      color: #ff9a3c;
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-top: 1.5rem;
+      opacity: 0.8;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* Main Content */
+.main-content {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+  color: #ffffff;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease 0.3s, visibility 1s ease 0.3s;
+  overflow-y: auto;
+}
+
+.main-content.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #2d1b69 100%);
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .hero-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+  letter-spacing: -1px;
+  
+  /* Remove glow effect */
+  text-shadow: none;
+  animation: none;
+  
+  /* Gradient text with animation */
+  background: linear-gradient(135deg, #ff7a00 0%, #ff9a3c 25%, #ffb347 50%, #ff9a3c 75%, #ff7a00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: titleGradientShift 4s ease-in-out infinite;
+}
+
+@keyframes titleGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+    .hero-subtitle {
+      font-size: 1.8rem;
+      color: #ff9a3c;
+      margin: 0 0 1.5rem;
+      font-weight: 300;
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0 0 3rem;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-primary {
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, #ff7a00 0%, #ff9a3c 100%);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid rgba(255, 122, 0, 0.3);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 8px 32px rgba(255, 122, 0, 0.3),
+        0 4px 16px rgba(255, 122, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .cta-primary:hover {
+      background: linear-gradient(135deg, #ff8c1a 0%, #ffb347 100%);
+      transform: translateY(-4px);
+      border-color: rgba(255, 122, 0, 0.6);
+      box-shadow: 
+        0 0 40px rgba(255, 122, 0, 0.6),
+        0 0 80px rgba(255, 122, 0, 0.4),
+        0 16px 48px rgba(255, 122, 0, 0.3);
+    }
+
+    .cta-secondary {
+      padding: 1rem 2.5rem;
+      background: transparent;
+      color: #ff7a00;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      border: 2px solid #ff7a00;
+      cursor: pointer;
+    }
+
+    .cta-secondary:hover {
+      background: rgba(255, 122, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 122, 0, 0.2);
+    }
+
+    /* Section Styles */
+    .about-section,
+    .services-section,
+    .portfolio-section,
+    .contact-section {
+      padding: 6rem 0;
+    }
+
+    .about-section {
+      background: #0f0f0f;
+    }
+
+    .services-section {
+      background: #1a1a1a;
+    }
+
+    .portfolio-section {
+      background: #0f0f0f;
+    }
+
+    .contact-section {
+      background: #1a1a1a;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin: 0 0 3rem;
+      color: #ff7a00;
+      text-shadow: 0 0 20px rgba(255, 122, 0, 0.3);
+    }
+
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-description {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0 0 3rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ff7a00;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .about-card {
+      background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+      padding: 2.5rem;
+      border-radius: 20px;
+      text-align: center;
+      border: 1px solid rgba(255, 122, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-card h3 {
+      font-size: 1.5rem;
+      color: #ff7a00;
+      margin: 0 0 1rem;
+    }
+
+    .about-card p {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+
+    /* Services Section */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+      padding: 2.5rem;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 122, 0, 0.1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(255, 122, 0, 0.2);
+      border-color: rgba(255, 122, 0, 0.3);
+    }
+
+    .service-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-title {
+      font-size: 1.5rem;
+      color: #ff7a00;
+      margin: 0 0 1rem;
+    }
+
+    .service-description {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+    }
+
+    /* Portfolio Section */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .portfolio-item {
+      background: #2a2a2a;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(255, 122, 0, 0.2);
+    }
+
+    .portfolio-thumbnail {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #3a3a3a 0%, #2a2a2a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-icon {
+      font-size: 4rem;
+      opacity: 0.7;
+    }
+
+    .portfolio-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 122, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+
+    .play-button {
+      font-size: 3rem;
+      color: #ffffff;
+    }
+
+    .portfolio-info {
+      padding: 1.5rem;
+    }
+
+    .portfolio-info h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.3rem;
+      color: #ff7a00;
+    }
+
+    .portfolio-info p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.95rem;
+    }
+
+    /* Contact Section */
+    .contact-content {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-description {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0 0 3rem;
+      line-height: 1.6;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-size: 1.5rem;
+      color: #ff7a00;
+      text-decoration: none;
+      margin-bottom: 2rem;
+      padding: 1rem 2rem;
+      border: 2px solid #ff7a00;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-email:hover {
+      background: rgba(255, 122, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 122, 0, 0.3);
+    }
+
+    .contact-social {
+      margin-top: 2rem;
+    }
+
+    .social-label {
+      display: block;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .social-link {
+      color: #ff9a3c;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(255, 154, 60, 0.3);
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: rgba(255, 154, 60, 0.1);
+      border-color: #ff9a3c;
+    }
+
+    /* Animations */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes glow {
+      0% { 
+        text-shadow: 
+          0 0 20px rgba(255, 122, 0, 0.5),
+          0 0 40px rgba(255, 122, 0, 0.3),
+          0 0 60px rgba(255, 122, 0, 0.2);
+      }
+      100% { 
+        text-shadow: 
+          0 0 30px rgba(255, 122, 0, 0.8),
+          0 0 60px rgba(255, 122, 0, 0.5),
+          0 0 90px rgba(255, 122, 0, 0.3);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes progressFill {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .loading-name {
+        font-size: 2.5rem;
+      }
+
+      .loading-progress {
+        width: 250px;
+      }
+
+      @media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+    /* Gradient effect mobile-এও work করবে */
+  }
+}
+
+      .hero-subtitle {
+        font-size: 1.3rem;
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .social-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .about-section,
+      .services-section,
+      .portfolio-section,
+      .contact-section {
+        padding: 4rem 0;
+      }
+
+      /* Mobile Navigation */
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: rgba(10, 10, 10, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem 0;
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-links.active {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .nav-links li {
+        margin: 1rem 0;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <!-- Loading Screen -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-content">
+      <h1 class="loading-name" id="loadingName">Welcome to Arshad's Realm</h1>
+      <div class="loading-progress-container">
+        <div class="loading-progress-bar" id="loadingProgressBar"></div>
+      </div>
+      <p class="loading-text" id="loadingText">Loading Experience...</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content" id="mainContent">
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+      <div class="navbar-container">
+        <a href="#" class="logo">L797</a>
+        <div class="menu-toggle" id="menuToggle">☰</div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#contact" class="cta-nav">Hire Me</a>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+      <div class="hero-content">
+        <h1 class="hero-title" id="heroTitle">Arshad Work</h1>
+        <p class="hero-subtitle" id="heroSubtitle">Creative Video Editor &amp; Visual Storyteller</p>
+        <p class="hero-description" id="heroDescription">Transforming ideas into compelling visual narratives that captivate and inspire audiences worldwide.</p>
+        <div class="hero-buttons">
+          <a href="#portfolio" class="cta-primary">View Work</a>
+          <button class="cta-secondary" onclick="restartLoading()">Experience</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2 class="section-title" id="aboutTitle">About Me</h2>
+            <p class="about-description" id="aboutDescription">With over 5 years of experience in video editing and post-production, I specialize in creating cinematic content that tells powerful stories. From commercial projects to creative documentaries, I bring technical expertise and artistic vision to every project.</p>
+            <div class="stats-grid">
+              <div class="stat-item"><span class="stat-number">150+</span> <span class="stat-label">Projects Completed</span></div>
+              <div class="stat-item"><span class="stat-number">50+</span> <span class="stat-label">Happy Clients</span></div>
+              <div class="stat-item"><span class="stat-number">5+</span> <span class="stat-label">Years Experience</span></div>
+            </div>
+          </div>
+          <div class="about-visual">
+            <div class="about-card">
+              <div class="card-icon">🎬</div>
+              <h3>Creative Vision</h3>
+              <p>Bringing stories to life through innovative editing techniques and artistic storytelling.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+      <div class="container">
+        <h2 class="section-title" id="servicesTitle">Services</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">🎥</div>
+            <h3 class="service-title">Video Editing</h3>
+            <p class="service-description">Professional video editing for commercials, music videos, and corporate content with attention to detail and storytelling.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎞️</div>
+            <h3 class="service-title">Post Production</h3>
+            <p class="service-description">Complete post-production services including color grading, sound design, and visual effects for polished final products.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">📹</div>
+            <h3 class="service-title">Content Creation</h3>
+            <p class="service-description">End-to-end content creation for social media, documentaries, and branded content that engages and converts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section" id="portfolio">
+      <div class="container">
+        <h2 class="section-title" id="portfolioTitle">Featured Work</h2>
+        <div class="portfolio-grid">
+          <div class="portfolio-item">
+            <div class="portfolio-thumbnail">
+              <div class="portfolio-icon">🎬</div>
+              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+            </div>
+            <div class="portfolio-info">
+              <h3>Brand Commercial</h3>
+              <p>30-second lifestyle brand commercial with dynamic editing and color grading</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-thumbnail">
+              <div class="portfolio-icon">🎵</div>
+              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+            </div>
+            <div class="portfolio-info">
+              <h3>Music Video</h3>
+              <p>Creative music video with synchronized editing and visual effects</p>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <div class="portfolio-thumbnail">
+              <div class="portfolio-icon">📺</div>
+              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+            </div>
+            <div class="portfolio-info">
+              <h3>Documentary</h3>
+              <p>15-minute documentary with compelling narrative structure</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="contact-content">
+          <h2 class="section-title" id="contactTitle">Let's Create Together</h2>
+          <p class="contact-description" id="contactDescription">Ready to bring your vision to life? Let's discuss your project and create something amazing together.</p>
+          <div class="contact-info">
+            <a href="mailto:hello@ararshadislam.com" class="contact-email" id="contactEmail">hello@ararshadislam.com</a>
+            <div class="contact-social">
+              <span class="social-label">Follow my work:</span>
+              <div class="social-links">
+                <a href="#" class="social-link">LinkedIn</a>
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">Behance</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Existing JavaScript code remains the same, with the addition of mobile menu functionality
+    
+    const defaultConfig = {
+      background_color: '#2d1b69',
+      surface_color: '#1a0f3d',
+      text_color: '#ffffff',
+      primary_action_color: '#ff7a00',
+      secondary_action_color: '#ff9a3c',
+      font_family: 'Inter',
+      font_size: 16,
+      name_text: 'AR Arshad',
+      loading_duration: '3',
+      hero_title: 'AR Arshad',
+      hero_subtitle: 'Creative Video Editor & Visual Storyteller',
+      hero_description: 'Transforming ideas into compelling visual narratives that captivate and inspire audiences worldwide.',
+      about_title: 'About Me',
+      about_description: 'With over 5 years of experience in video editing and post-production, I specialize in creating cinematic content that tells powerful stories. From commercial projects to creative documentaries, I bring technical expertise and artistic vision to every project.',
+      services_title: 'Services',
+      portfolio_title: 'Featured Work',
+      contact_title: "Let's Create Together",
+      contact_description: 'Ready to bring your vision to life? Let\'s discuss your project and create something amazing together.',
+      contact_email: 'hello@ararshadislam.com'
+    };
+
+    let loadingTimeout;
+    let progressInterval;
+    const totalLoadingTime = 2500; // 2.5 seconds
+
+    function startLoading() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      const mainContent = document.getElementById('mainContent');
+      const progressBar = document.getElementById('loadingProgressBar');
+      const loadingText = document.getElementById('loadingText');
+
+      // Reset states - ensure main content is hidden during loading
+      loadingScreen.classList.remove('hidden');
+      mainContent.classList.remove('visible');
+      progressBar.style.width = '0%';
+
+      let progress = 0;
+      const intervalTime = 50;
+      const increment = (100 / (totalLoadingTime / intervalTime));
+
+      // Start progress bar animation
+      progressInterval = setInterval(() => {
+        progress += increment;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(progressInterval);
+        }
+        progressBar.style.width = progress + '%';
+        
+        // Update loading text based on progress
+        if (progress < 30) {
+          loadingText.textContent = 'Loading Experience...';
+        } else if (progress < 70) {
+          loadingText.textContent = 'Preparing Content...';
+        } else {
+          loadingText.textContent = 'Almost Ready...';
+        }
+      }, intervalTime);
+
+      // Complete loading after total time
+      loadingTimeout = setTimeout(() => {
+        // First show main content
+        mainContent.classList.add('visible');
+        
+        // Then hide loading screen after a very short delay
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+          // Scroll to top when loading completes
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 100); // Reduced delay to 100ms
+      }, totalLoadingTime);
+    }
+
+    function restartLoading() {
+      // Clear any existing timeouts/intervals
+      if (loadingTimeout) {
+        clearTimeout(loadingTimeout);
+      }
+      if (progressInterval) {
+        clearInterval(progressInterval);
+      }
+      
+      // Scroll to top before restarting
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Restart loading
+      startLoading();
+    }
+
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.getElementById('menuToggle');
+      const navLinks = document.getElementById('navLinks');
+      
+      if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', function() {
+          navLinks.classList.toggle('active');
+        });
+      }
+      
+      // Close mobile menu when clicking on a link
+      const navItems = document.querySelectorAll('.nav-links a');
+      navItems.forEach(item => {
+        item.addEventListener('click', function() {
+          navLinks.classList.remove('active');
+        });
+      });
+      
+      // Start the loading animation
+      startLoading();
+      
+      // Add smooth scrolling to navigation links
+      const navLinksAll = document.querySelectorAll('a[href^="#"]');
+      navLinksAll.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+        navbar.style.backdropFilter = 'blur(10px)';
+      } else {
+        navbar.style.background = 'rgba(10, 10, 10, 0.9)';
+        navbar.style.backdropFilter = 'blur(10px)';
+      }
+    });
+
+    // Rest of your existing JavaScript functions (onConfigChange, mapToCapabilities, etc.)
+    async function onConfigChange(config) {
+      // Your existing implementation
+    }
+
+    function mapToCapabilities(config) {
+      // Your existing implementation
+    }
+
+    function mapToEditPanelValues(config) {
+      // Your existing implementation
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ </body>
+</html>
