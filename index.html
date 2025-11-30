@@ -53,6 +53,19 @@
       text-decoration: none;
     }
 
+    /* Logo Styles */
+    .logo img {
+      height: 40px;
+      width: auto;
+      transition: all 0.3s ease;
+      border-radius: 5px;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+
     .nav-links {
       list-style: none;
       display: flex;
@@ -302,10 +315,40 @@
       text-align: center;
       padding: 4rem 2rem;
       background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #2d1b69 100%);
+      position: relative;
+    }
+
+    /* Hero Video Background */
+    .hero-video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .hero-background-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(10,10,10,0.8) 0%, rgba(26,26,46,0.7) 100%);
     }
 
     .hero-content {
       max-width: 800px;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-title {
@@ -481,6 +524,26 @@
       letter-spacing: 1px;
     }
 
+    /* Profile Image Styles */
+    .profile-image-container {
+      position: relative;
+      margin-bottom: 2rem;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(255, 122, 0, 0.3);
+    }
+
+    .profile-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-image:hover {
+      transform: scale(1.05);
+    }
+
     .about-card {
       background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
       padding: 2.5rem;
@@ -575,6 +638,24 @@
       overflow: hidden;
     }
 
+    /* Portfolio Images and Videos */
+    .portfolio-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .portfolio-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .portfolio-thumbnail:hover .portfolio-image {
+      transform: scale(1.1);
+    }
+
     .portfolio-icon {
       font-size: 4rem;
       opacity: 0.7;
@@ -592,6 +673,7 @@
       justify-content: center;
       opacity: 0;
       transition: opacity 0.3s ease;
+      flex-direction: column;
     }
 
     .portfolio-item:hover .portfolio-overlay {
@@ -601,6 +683,18 @@
     .play-button {
       font-size: 3rem;
       color: #ffffff;
+    }
+
+    .view-project {
+      color: #ffffff;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .portfolio-overlay:hover .view-project {
+      opacity: 1;
     }
 
     .portfolio-info {
@@ -679,6 +773,51 @@
     .social-link:hover {
       background: rgba(255, 154, 60, 0.1);
       border-color: #ff9a3c;
+    }
+
+    /* Video Modal */
+    .video-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      width: 800px;
+    }
+
+    .modal-video-player {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-modal:hover {
+      color: #ff7a00;
     }
 
     /* Animations */
@@ -820,6 +959,10 @@
       .nav-links li {
         margin: 1rem 0;
       }
+
+      .profile-image {
+        height: 250px;
+      }
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -844,7 +987,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar-container">
        <a href="#" class="logo">
-  <img src="https://github.com/arshadmit/it/commit/dad3eca3aebe3308b0b365c0560f5e1c745f1abd#diff-ed505f7625c16566b53e27b27ec3f2ea6ee4c04f6e7482c6b13f55e316c9d032" alt="AR Arshad Logo" style="height: 40px; width: auto;">
+  <img src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/My%20logo%20Main-01.png" alt="AR Arshad Logo">
 </a>
   
         <div class="menu-toggle" id="menuToggle">☰</div>
@@ -861,6 +1004,15 @@
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
+      <!-- Background Video -->
+      <div class="hero-video-container">
+        <video autoplay muted loop id="heroVideo" class="hero-background-video">
+          <source src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/background-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+      </div>
+      
       <div class="hero-content">
         <h1 class="hero-title" id="heroTitle">Arshad Work</h1>
         <p class="hero-subtitle" id="heroSubtitle">Creative Video Editor &amp; Visual Storyteller</p>
@@ -886,6 +1038,9 @@
             </div>
           </div>
           <div class="about-visual">
+            <div class="profile-image-container">
+              <img src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/profile-photo.jpg" alt="AR Arshad" class="profile-image">
+            </div>
             <div class="about-card">
               <div class="card-icon">🎬</div>
               <h3>Creative Vision</h3>
@@ -927,8 +1082,11 @@
         <div class="portfolio-grid">
           <div class="portfolio-item">
             <div class="portfolio-thumbnail">
-              <div class="portfolio-icon">🎬</div>
-              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+              <img src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/project1.jpg" alt="Brand Commercial" class="portfolio-image">
+              <div class="portfolio-overlay">
+                <span class="play-button">▶</span>
+                <p class="view-project">View Project</p>
+              </div>
             </div>
             <div class="portfolio-info">
               <h3>Brand Commercial</h3>
@@ -937,8 +1095,13 @@
           </div>
           <div class="portfolio-item">
             <div class="portfolio-thumbnail">
-              <div class="portfolio-icon">🎵</div>
-              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+              <video class="portfolio-video" poster="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/video-poster.jpg">
+                <source src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/project-video.mp4" type="video/mp4">
+              </video>
+              <div class="portfolio-overlay">
+                <span class="play-button">▶</span>
+                <p class="view-project">Play Video</p>
+              </div>
             </div>
             <div class="portfolio-info">
               <h3>Music Video</h3>
@@ -947,8 +1110,11 @@
           </div>
           <div class="portfolio-item">
             <div class="portfolio-thumbnail">
-              <div class="portfolio-icon">📺</div>
-              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+              <img src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/project3.jpg" alt="Documentary" class="portfolio-image">
+              <div class="portfolio-overlay">
+                <span class="play-button">▶</span>
+                <p class="view-project">View Project</p>
+              </div>
             </div>
             <div class="portfolio-info">
               <h3>Documentary</h3>
@@ -979,6 +1145,17 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <video controls id="modalVideo" class="modal-video-player">
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
   </div>
 
   <script>
@@ -1074,6 +1251,56 @@
       startLoading();
     }
 
+    // Video Modal Functionality
+    function initVideoModal() {
+      const portfolioItems = document.querySelectorAll('.portfolio-item');
+      const videoModal = document.getElementById('videoModal');
+      const modalVideo = document.getElementById('modalVideo');
+      const closeModal = document.getElementById('closeModal');
+
+      portfolioItems.forEach((item, index) => {
+        const playButton = item.querySelector('.play-button');
+        const video = item.querySelector('.portfolio-video');
+        const image = item.querySelector('.portfolio-image');
+
+        playButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          if (video) {
+            // If it's a video item
+            const videoSource = video.querySelector('source').src;
+            modalVideo.querySelector('source').src = videoSource;
+            modalVideo.load();
+            videoModal.classList.add('active');
+          } else if (image) {
+            // If it's an image item, show larger view
+            alert('Project details would open here');
+          }
+        });
+      });
+
+      // Close modal events
+      closeModal.addEventListener('click', () => {
+        videoModal.classList.remove('active');
+        modalVideo.pause();
+      });
+
+      videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+          videoModal.classList.remove('active');
+          modalVideo.pause();
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+          videoModal.classList.remove('active');
+          modalVideo.pause();
+        }
+      });
+    }
+
     // Mobile menu toggle
     document.addEventListener('DOMContentLoaded', function() {
       const menuToggle = document.getElementById('menuToggle');
@@ -1108,6 +1335,9 @@
           }
         });
       });
+
+      // Initialize video modal functionality
+      initVideoModal();
     });
 
     // Navbar scroll effect
@@ -1145,7 +1375,4 @@
     }
   </script>
  </body>
-
 </html>
-
-
