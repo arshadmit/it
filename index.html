@@ -53,6 +53,19 @@
       text-decoration: none;
     }
 
+    /* Logo Styles */
+    .logo img {
+      height: 40px;
+      width: auto;
+      transition: all 0.3s ease;
+      border-radius: 5px;
+    }
+
+    .logo img:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+
     .nav-links {
       list-style: none;
       display: flex;
@@ -300,112 +313,26 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 4rem 2rem;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #2d1b69 100%);
-    }
-
-    .hero-content {
-      max-width: 800px;
-    }
-
-    .hero-title {
-  font-size: 4.5rem;
-  font-weight: 800;
-  margin: 0 0 1rem;
-  letter-spacing: -1px;
-  
-  /* Remove glow effect */
-  text-shadow: none;
-  animation: none;
-  
-  /* Gradient text with animation */
-  background: linear-gradient(135deg, #ff7a00 0%, #ff9a3c 25%, #ffb347 50%, #ff9a3c 75%, #ff7a00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  background-size: 200% 200%;
-  animation: titleGradientShift 4s ease-in-out infinite;
-}
-
-@keyframes titleGradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-    .hero-subtitle {
-      font-size: 1.8rem;
-      color: #ff9a3c;
-      margin: 0 0 1.5rem;
-      font-weight: 300;
-    }
-
-    .hero-description {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin: 0 0 3rem;
-      line-height: 1.6;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .cta-primary {
-      padding: 1rem 2.5rem;
-      background: linear-gradient(135deg, #ff7a00 0%, #ff9a3c 100%);
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border: 2px solid rgba(255, 122, 0, 0.3);
-      cursor: pointer;
+      padding: 0;
+      background: none;
       position: relative;
+    }
+
+    /* Hero Image Styles */
+    .hero-image-container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
-      box-shadow: 
-        0 8px 32px rgba(255, 122, 0, 0.3),
-        0 4px 16px rgba(255, 122, 0, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     }
 
-    .cta-primary:hover {
-      background: linear-gradient(135deg, #ff8c1a 0%, #ffb347 100%);
-      transform: translateY(-4px);
-      border-color: rgba(255, 122, 0, 0.6);
-      box-shadow: 
-        0 0 40px rgba(255, 122, 0, 0.6),
-        0 0 80px rgba(255, 122, 0, 0.4),
-        0 16px 48px rgba(255, 122, 0, 0.3);
-    }
-
-    .cta-secondary {
-      padding: 1rem 2.5rem;
-      background: transparent;
-      color: #ff7a00;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      border: 2px solid #ff7a00;
-      cursor: pointer;
-    }
-
-    .cta-secondary:hover {
-      background: rgba(255, 122, 0, 0.1);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 122, 0, 0.2);
+    .hero-main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
     /* Section Styles */
@@ -479,6 +406,26 @@
       color: rgba(255, 255, 255, 0.7);
       text-transform: uppercase;
       letter-spacing: 1px;
+    }
+
+    /* Profile Image Styles */
+    .profile-image-container {
+      position: relative;
+      margin-bottom: 2rem;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(255, 122, 0, 0.3);
+    }
+
+    .profile-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-image:hover {
+      transform: scale(1.05);
     }
 
     .about-card {
@@ -575,6 +522,24 @@
       overflow: hidden;
     }
 
+    /* Portfolio Images and Videos */
+    .portfolio-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .portfolio-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .portfolio-thumbnail:hover .portfolio-image {
+      transform: scale(1.1);
+    }
+
     .portfolio-icon {
       font-size: 4rem;
       opacity: 0.7;
@@ -592,6 +557,7 @@
       justify-content: center;
       opacity: 0;
       transition: opacity 0.3s ease;
+      flex-direction: column;
     }
 
     .portfolio-item:hover .portfolio-overlay {
@@ -601,6 +567,18 @@
     .play-button {
       font-size: 3rem;
       color: #ffffff;
+    }
+
+    .view-project {
+      color: #ffffff;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .portfolio-overlay:hover .view-project {
+      opacity: 1;
     }
 
     .portfolio-info {
@@ -681,6 +659,51 @@
       border-color: #ff9a3c;
     }
 
+    /* Video Modal */
+    .video-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      width: 800px;
+    }
+
+    .modal-video-player {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close-modal:hover {
+      color: #ff7a00;
+    }
+
     /* Animations */
     @keyframes spin {
       0% { transform: rotate(0deg); }
@@ -734,24 +757,14 @@
       }
 
       @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
-    /* Gradient effect mobile-এও work করবে */
+  .hero-main-image {
+    object-fit: contain;
+    padding: 20px;
+  }
+  .hero-image-container {
+    height: 70vh;
   }
 }
-
-      .hero-subtitle {
-        font-size: 1.3rem;
-      }
-
-      .hero-description {
-        font-size: 1rem;
-      }
-
-      .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
 
       .section-title {
         font-size: 2rem;
@@ -820,6 +833,10 @@
       .nav-links li {
         margin: 1rem 0;
       }
+
+      .profile-image {
+        height: 250px;
+      }
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -843,7 +860,10 @@
     <!-- Navigation Bar -->
     <nav class="navbar" id="navbar">
       <div class="navbar-container">
-        <a href="#" class="logo">L799</a>
+       <a href="#" class="logo">
+  <img src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/My%20logo%20Main-01.png" alt="AR Arshad Logo">
+</a>
+  
         <div class="menu-toggle" id="menuToggle">☰</div>
         <ul class="nav-links" id="navLinks">
           <li><a href="#home">Home</a></li>
@@ -858,14 +878,8 @@
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
-      <div class="hero-content">
-        <h1 class="hero-title" id="heroTitle">Arshad Work</h1>
-        <p class="hero-subtitle" id="heroSubtitle">Creative Video Editor &amp; Visual Storyteller</p>
-        <p class="hero-description" id="heroDescription">Transforming ideas into compelling visual narratives that captivate and inspire audiences worldwide.</p>
-        <div class="hero-buttons">
-          <a href="#portfolio" class="cta-primary">View Work</a>
-          <button class="cta-secondary" onclick="restartLoading()">Experience</button>
-        </div>
+      <div class="hero-image-container">
+        <img src="YOUR_HERO_IMAGE_LINK_HERE" alt="AR Arshad - Creative Video Editor" class="hero-main-image">
       </div>
     </section>
 
@@ -883,6 +897,9 @@
             </div>
           </div>
           <div class="about-visual">
+            <div class="profile-image-container">
+              <img src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/profile-photo.jpg" alt="AR Arshad" class="profile-image">
+            </div>
             <div class="about-card">
               <div class="card-icon">🎬</div>
               <h3>Creative Vision</h3>
@@ -924,8 +941,11 @@
         <div class="portfolio-grid">
           <div class="portfolio-item">
             <div class="portfolio-thumbnail">
-              <div class="portfolio-icon">🎬</div>
-              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+              <img src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/project1.jpg" alt="Brand Commercial" class="portfolio-image">
+              <div class="portfolio-overlay">
+                <span class="play-button">▶</span>
+                <p class="view-project">View Project</p>
+              </div>
             </div>
             <div class="portfolio-info">
               <h3>Brand Commercial</h3>
@@ -934,8 +954,13 @@
           </div>
           <div class="portfolio-item">
             <div class="portfolio-thumbnail">
-              <div class="portfolio-icon">🎵</div>
-              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+              <video class="portfolio-video" poster="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/video-poster.jpg">
+                <source src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/project-video.mp4" type="video/mp4">
+              </video>
+              <div class="portfolio-overlay">
+                <span class="play-button">▶</span>
+                <p class="view-project">Play Video</p>
+              </div>
             </div>
             <div class="portfolio-info">
               <h3>Music Video</h3>
@@ -944,8 +969,11 @@
           </div>
           <div class="portfolio-item">
             <div class="portfolio-thumbnail">
-              <div class="portfolio-icon">📺</div>
-              <div class="portfolio-overlay"><span class="play-button">▶</span></div>
+              <img src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/project3.jpg" alt="Documentary" class="portfolio-image">
+              <div class="portfolio-overlay">
+                <span class="play-button">▶</span>
+                <p class="view-project">View Project</p>
+              </div>
             </div>
             <div class="portfolio-info">
               <h3>Documentary</h3>
@@ -976,6 +1004,17 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- Video Modal -->
+  <div class="video-modal" id="videoModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <video controls id="modalVideo" class="modal-video-player">
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
   </div>
 
   <script>
@@ -1071,6 +1110,56 @@
       startLoading();
     }
 
+    // Video Modal Functionality
+    function initVideoModal() {
+      const portfolioItems = document.querySelectorAll('.portfolio-item');
+      const videoModal = document.getElementById('videoModal');
+      const modalVideo = document.getElementById('modalVideo');
+      const closeModal = document.getElementById('closeModal');
+
+      portfolioItems.forEach((item, index) => {
+        const playButton = item.querySelector('.play-button');
+        const video = item.querySelector('.portfolio-video');
+        const image = item.querySelector('.portfolio-image');
+
+        playButton.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          if (video) {
+            // If it's a video item
+            const videoSource = video.querySelector('source').src;
+            modalVideo.querySelector('source').src = videoSource;
+            modalVideo.load();
+            videoModal.classList.add('active');
+          } else if (image) {
+            // If it's an image item, show larger view
+            alert('Project details would open here');
+          }
+        });
+      });
+
+      // Close modal events
+      closeModal.addEventListener('click', () => {
+        videoModal.classList.remove('active');
+        modalVideo.pause();
+      });
+
+      videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+          videoModal.classList.remove('active');
+          modalVideo.pause();
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+          videoModal.classList.remove('active');
+          modalVideo.pause();
+        }
+      });
+    }
+
     // Mobile menu toggle
     document.addEventListener('DOMContentLoaded', function() {
       const menuToggle = document.getElementById('menuToggle');
@@ -1105,6 +1194,9 @@
           }
         });
       });
+
+      // Initialize video modal functionality
+      initVideoModal();
     });
 
     // Navbar scroll effect
