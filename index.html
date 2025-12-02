@@ -1003,15 +1003,39 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section" id="home">
-      <!-- Background Video -->
-      <div class="hero-video-container">
-        <video autoplay muted loop id="heroVideo" class="hero-background-video">
-          <source src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/background-video.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <div class="video-overlay"></div>
+<section class="hero-section" id="home">
+  <!-- Hero Background Image -->
+  <div class="hero-background-container">
+    <img src="YOUR_BACKGROUND_IMAGE_LINK" alt="Background" class="hero-background-image">
+    <div class="background-overlay"></div>
+  </div>
+  
+  <div class="container">
+    <div class="hero-content-with-profile">
+      <!-- Profile Image Section -->
+      <div class="hero-profile-container">
+        <div class="profile-frame">
+          <img src="YOUR_PROFILE_PHOTO_LINK" alt="AR Arshad" class="hero-profile-image">
+          <div class="profile-glow"></div>
+        </div>
+        <div class="profile-badge">
+          <span class="badge-text">Creative Director</span>
+        </div>
       </div>
+      
+      <!-- Text Content -->
+      <div class="hero-text-content">
+        <h1 class="hero-title">Arshad Work</h1>
+        <p class="hero-subtitle">Creative Video Editor & Visual Storyteller</p>
+        <p class="hero-description">Transforming ideas into compelling visual narratives that captivate and inspire audiences worldwide.</p>
+        <div class="hero-buttons">
+          <a href="#portfolio" class="cta-primary">View Work</a>
+          <button class="cta-secondary" onclick="restartLoading()">Experience</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       
       <div class="hero-content">
         <h1 class="hero-title" id="heroTitle">Arshad Work</h1>
@@ -1374,6 +1398,7 @@
   </script>
  </body>
 </html>
+
 
 
 
