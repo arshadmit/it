@@ -313,26 +313,142 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0;
-      background: none;
+      padding: 4rem 2rem;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #2d1b69 100%);
       position: relative;
     }
 
-    /* Hero Image Styles */
-    .hero-image-container {
+    /* Hero Video Background */
+    .hero-video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 100%;
       overflow: hidden;
+      z-index: -1;
     }
 
-    .hero-main-image {
+    .hero-background-video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
+      opacity: 0.3;
+    }
+
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(10,10,10,0.8) 0%, rgba(26,26,46,0.7) 100%);
+    }
+
+    .hero-content {
+      max-width: 800px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+  letter-spacing: -1px;
+  
+  /* Remove glow effect */
+  text-shadow: none;
+  animation: none;
+  
+  /* Gradient text with animation */
+  background: linear-gradient(135deg, #ff7a00 0%, #ff9a3c 25%, #ffb347 50%, #ff9a3c 75%, #ff7a00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: titleGradientShift 4s ease-in-out infinite;
+}
+
+@keyframes titleGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+    .hero-subtitle {
+      font-size: 1.8rem;
+      color: #ff9a3c;
+      margin: 0 0 1.5rem;
+      font-weight: 300;
+    }
+
+    .hero-description {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0 0 3rem;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-primary {
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, #ff7a00 0%, #ff9a3c 100%);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid rgba(255, 122, 0, 0.3);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 8px 32px rgba(255, 122, 0, 0.3),
+        0 4px 16px rgba(255, 122, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+
+    .cta-primary:hover {
+      background: linear-gradient(135deg, #ff8c1a 0%, #ffb347 100%);
+      transform: translateY(-4px);
+      border-color: rgba(255, 122, 0, 0.6);
+      box-shadow: 
+        0 0 40px rgba(255, 122, 0, 0.6),
+        0 0 80px rgba(255, 122, 0, 0.4),
+        0 16px 48px rgba(255, 122, 0, 0.3);
+    }
+
+    .cta-secondary {
+      padding: 1rem 2.5rem;
+      background: transparent;
+      color: #ff7a00;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      border: 2px solid #ff7a00;
+      cursor: pointer;
+    }
+
+    .cta-secondary:hover {
+      background: rgba(255, 122, 0, 0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255, 122, 0, 0.2);
     }
 
     /* Section Styles */
@@ -757,14 +873,24 @@
       }
 
       @media (max-width: 768px) {
-  .hero-main-image {
-    object-fit: contain;
-    padding: 20px;
-  }
-  .hero-image-container {
-    height: 70vh;
+  .hero-title {
+    font-size: 2.5rem;
+    /* Gradient effect mobile-এও work করবে */
   }
 }
+
+      .hero-subtitle {
+        font-size: 1.3rem;
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
 
       .section-title {
         font-size: 2rem;
@@ -878,8 +1004,23 @@
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
-      <div class="hero-image-container">
-        <img src="" alt="AR Arshad - Creative Video Editor" class="hero-main-image">
+      <!-- Background Video -->
+      <div class="hero-video-container">
+        <video autoplay muted loop id="heroVideo" class="hero-background-video">
+          <source src="https://raw.githubusercontent.com/arshadmit/it/refs/heads/main/background-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+      </div>
+      
+      <div class="hero-content">
+        <h1 class="hero-title" id="heroTitle">Arshad Work</h1>
+        <p class="hero-subtitle" id="heroSubtitle">Creative Video Editor &amp; Visual Storyteller</p>
+        <p class="hero-description" id="heroDescription">Transforming ideas into compelling visual narratives that captivate and inspire audiences worldwide.</p>
+        <div class="hero-buttons">
+          <a href="#portfolio" class="cta-primary">View Work</a>
+          <button class="cta-secondary" onclick="restartLoading()">Experience</button>
+        </div>
       </div>
     </section>
 
@@ -1235,5 +1376,3 @@
   </script>
  </body>
 </html>
-
-
